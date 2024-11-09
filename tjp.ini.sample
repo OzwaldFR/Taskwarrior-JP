@@ -1,0 +1,29 @@
+[global]
+; === MANDATORY ===
+token=Enter_your_joplin_token_here
+url=http://127.0.0.1:41184
+
+; === OPTIONAL ===
+; You can call `tjp.py --list-notebooks` to see a list of the currently defined
+; folders within your Joplin. This will help you identify their respective ID.
+; An "id" looks a bit like that : 0cc175b9c0f1b6a831c399e269772661
+
+; When you call "tjp.py add ..." the new todo-note will be created within this
+; notebook (also called "folder") :
+;
+; folder_add=0cc175b9c0f1b6a831c399e269772661
+
+; If you want to automatically move todo-notes to a specific notebook when you
+; mark them as "done", then use this option and specify the destination ID of 
+; the notebook (also called "folder"). If you leave this option commented, then
+; tasks you mark as "done" are left where they are and only marked as "done".
+;
+; folder_done=0cc175b9c0f1b6a831c399e269772661
+
+; If you want to read todo-notes from a single notebook (also called "folder"),
+; then use this option to define which is this notebook.
+; If this option is not set, TJP will read todo-notes from every notebooks of
+; your Joplin (which will be slower).
+; When calling `tjp.py` with the `--really-all` flag, this option is ignored.
+;
+; folder_read=0cc175b9c0f1b6a831c399e269772661
