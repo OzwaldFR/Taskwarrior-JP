@@ -109,8 +109,12 @@ If you intend to use any of these options (which I strongly suggest, at least fo
 This will display a list of your current notebooks and their ID.
 You can use these IDs in your `tjp.ini`.
 
-As a perfonal preference, I have a notebook called "TODO" in Joplin, which has 2 sub-notebooks : "todo" and "done".
-I configured my Taskwarrior-JP to read only from the "TODO>todo" notebook, to create in this same notebook, and to move completed tasks to the "TODO>done" notebook.
+As a personal preference, I have a notebook called "TODO" in Joplin, which has 2 sub-notebooks : "todo" and "done".
+I configured my Taskwarrior-JP to :
+ * read only from the "TODO>todo" notebook (option "folder_todo").
+ * create in this same notebook (option "folder_add").
+ * move completed tasks to the "TODO>done" notebook (option "folder_done").
+
 But do as you please. 
 
 ### Reading and writing long texts
@@ -158,10 +162,10 @@ You can modify the notes directly in Joplin without any problem (actually, I oft
 
 ### Arguments order
 
-The actual man of Taskwarrior shows this format : `task <filter> <command> [ <mods> | <args> ]`.
+The man of the real Taskwarrior shows this format : `task <filter> <command> [ <mods> | <args> ]`.
 Taskwarrior-JP accepts the same format and knows the following commands :
  * `next` (which is the default one if no command is written) : displays the tasks you selected with you filters. The most urgent tasks are first.
- * `add` : creates a new tasks (using your specified "mods" and "args", the title being the default arg).
+ * `add` : creates a new task (using your specified "mods" and "args", the title being the default arg).
  * `done` : mark as "done" the single task selected by your filter (the most often used filter being the ID of a note).
  * `modify` : select a single task thanks to your filter and modify it according to your mods and args.
  * `cat` : displays the content of the body of the single task selected by your filters.
@@ -170,9 +174,9 @@ Taskwarrior-JP accepts the same format and knows the following commands :
 Filters can be specified in any order. So can be mods and args.
 
 So, all these way of specifying mods/args are equivalents :
- * `./tjp.py add +work +boss due:tomorrow "Write a mail."
- * `./tjp.py add +work "Write a mail." due:tomorrow +boss
- * `./tjp.py add "Write a mail." due:tomorrow +work +boss
+ * `./tjp.py add +work +boss due:tomorrow "Write a mail."`
+ * `./tjp.py add +work "Write a mail." due:tomorrow +boss`
+ * `./tjp.py add "Write a mail." due:tomorrow +work +boss`
 
 And all these way of filtering are equivalents :
 
