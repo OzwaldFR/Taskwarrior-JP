@@ -365,7 +365,13 @@ class Joplin:
                 url += '&token='+self.token
                 url += '&page='+str(page)
                 logger.debug('Fetching page %s (%s)'%(page, url))
-                f = urllib.request.urlopen(url)
+                try:
+                    f = urllib.request.urlopen(url)
+                except urllib.error.URLError as err:
+                    logger.critical('Failed to connect to Joplin (%s). '
+                                    ' Is the webclipper running at %s ?'%(
+                                    str(err), self.url))
+                    sys.exit(1)
                 data = json.loads(f.read().decode('utf-8'))
                 if data['has_more']:
                     page += 1
