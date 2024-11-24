@@ -468,9 +468,7 @@ class Joplin:
                 logger.debug('Filter : metadata "%s"'%filter_text)
                 filter_function = ('_filter_metadata', {'filter_text':filter_text})
                 filter_functions.append(filter_function)
-            elif re.match('^[0-9a-f]+$', filter_text):
-                if not allow_id_filter:
-                    raise ValueError('Most likely usage error. Read --help.')
+            elif allow_id_filter and re.match('^[0-9a-f]+$', filter_text):
                 logger.debug('Filter : id starts with %s'%filter_text)
                 filter_function = ("_filter_id", {"filter_id":filter_text})
                 filter_functions.append(filter_function)
@@ -487,8 +485,13 @@ class Joplin:
                                   })
 
                 filter_functions.append(filter_function)
-            else:
-                raise ValueError('Most likely usage error. Read --help.')
+            else:  # Text filter.
+                # For now we only search the titles and are not case-sensitive.
+                # Maybe we should expand to body_text ? Or restrict to be case-
+                # sensitive ? We'll see how things goes while we use it.
+                logger.debug("Filter : text search > %s"%filter_text)
+                filter_function = ('_filter_text', {'filter_text':filter_text})
+                filter_functions.append(filter_function)
         
         # Now we apply the filters
         result = []
@@ -517,6 +520,13 @@ class Joplin:
         if len(filter_id)<1:
             raise ValueError('Cannot filter on an empty ID.')
         return todo.id.startswith(filter_id)
+
+
+    @staticmethod
+    def _filter_text(todo, filter_text):
+        if len(filter_text)<1:
+            raise ValueError('Cannot filter on empty text.')
+        return filter_text.lower() in todo.title.lower()
 
 
     @staticmethod
@@ -756,6 +766,7 @@ class Joplin:
             logger.debug('Will mark TODO %s as completed.'%todo.id)
             with urllib.request.urlopen(req) as f:
                 pass
+            print('Task finished : %s'%todo.title)
                 
 
     def do_edit(self, filters, mods_args):

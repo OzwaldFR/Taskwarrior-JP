@@ -21,7 +21,7 @@ That's in the "Tools > Options" menu within Joplin, then "Web Clipper" in the le
 Copy `tjp.ini.sample` as `tjp.ini` in the same folder as `tjp.py` then open it and replace `Enter_your_joplin_token_here` with your Web Clipper token.
 Note : this step is optionnal ; if you prefer, you can pass the token as a command-line argument to `tjp.py` each time you call it : `tjp.py --token=your_WebClipper_token ...`.
 
-## Basic usage : list, create, mark as done
+## Basic usage : list, create, search, mark as done
 
 ### Listing todo-notes
 
@@ -31,6 +31,12 @@ If you execute `./tjp.py`, you should see a list of all the todo-notes that are 
 
 If you execute `./tjp.py add "This is the title of my new todo"`, Taskwarrior-JP will create a new todo-note in your Joplin App (in the root notebook).
 The title of this new note will be "This is the title of my new todo".
+
+### Search todo-notes
+
+If you execute `./tjp.py lorem`, you should see a list of all the todo-notes which have the string "lorem" in their title (obviously, you should change the word "lorem" for something that's relevant to what you are searching for : `./tjp.py buy`, `./tjp.py john`, etc.).
+That's a very simple search feature but it should be enough for most beginners.
+You'll learn more advanced search methods (using tags, projects, and metadata) later in this README.
 
 ### Marking a todo-note as "done"
 
