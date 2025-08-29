@@ -106,6 +106,14 @@ Here are all the currently "usable" metadata :
 
 You can also define any other metadata (ex: `./tjp.py ff16 modify mysupermeta:valueofdoom`) but they will not be treated specially (they won't alter the priority of tasks, etc.) and they won't even be displayed back to you so they are only usefull for filtering purposes.
 
+### Annotations
+
+Mostly like in the original Taskwarrior, you can annotate your tasks in Taskwarrior-JP.
+
+Example to add an annotation to task which id is `456` : `./tjp.py 456 annotate "I completed a baby step on this matter"`
+
+Annotations will be displayed to you when you list your tasks, beneath their title, prefixed by the date and time each annotation was created.
+
 ## Advanced usage : 
 
 ### Using specific notebooks (folders)

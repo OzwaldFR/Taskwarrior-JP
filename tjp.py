@@ -680,6 +680,13 @@ class Joplin:
                     text = self._fmt4cell(todo.title)
                     if getattr(todo,'todo_completed',0) != 0:
                         text = seps[0]+text+seps[1]
+                    for key,value in todo.metadata.items():
+                        annotation_seps = {True:('\033[0m\033[2m','\033[0m'),False:('','')}[self.color]
+                        if key.startswith('annotation_'):
+                            moment = datetime.datetime.fromisoformat(key[11:])
+                            text += '\n %s:%s'%(
+                                annotation_seps[0]+self._fmt4cell(moment)+annotation_seps[1], value)
+                            
                     column.append(text)
                 table.add_column(label, column)
             elif [hasattr(todo,key) for todo in todos].count(True)>0:
@@ -768,6 +775,45 @@ class Joplin:
                 pass
             print('Task finished : %s'%todo.title)
                 
+
+    def do_annotate(self, filters, mods_args):
+        todos = self.get_todos()
+        filtered_todos = self.filter_todos(filters, todos)
+        if len(filtered_todos) > 1:
+            logger.critical('FATAL:ambiguous selection. "Annotate" must be called on a single item.')
+            self.generate_table(filtered_todos)
+            return
+        elif len(filtered_todos) < 1:
+            logger.critical('FATAL:no todo matches your filter.')
+            return
+        todo = filtered_todos[0]
+
+        annotation = ' '.join(mods_args)
+        annotation = annotation.lstrip().rstrip()
+        if annotation=='':
+            print('Empty annotation is ignored.')
+            return
+
+        key = 'annotation_'
+        moment = datetime.datetime.now().isoformat().replace('-','').replace(':','')
+        key += moment
+
+        todo.metadata[key] = annotation
+
+        todo_json = todo.to_joplinjson()
+
+        DATA = {'body':todo_json['body']}
+        # TODO : update modified time & co.
+        DATA = json.dumps(DATA)
+        req = urllib.request.Request(
+                    url=self.url+'/notes/'+todo.id+'?token='+self.token,
+                    data=DATA.encode('utf-8'),
+                    method='PUT',
+                    )
+        logger.debug('Annotating TODO of ID:%s'%todo.id)
+        with urllib.request.urlopen(req) as f:
+            pass
+    
 
     def do_edit(self, filters, mods_args):
         """This feature does not exist in Taswarrior. This opens EDITOR and
@@ -1036,7 +1082,7 @@ def parse_args():
     # task <filter> <command> [ <mods> | <args> ]
 
     # Identifying the command
-    commands = ['next', 'add', 'done', 'modify', 'edit', 'cat']
+    commands = ['next', 'add', 'done', 'modify', 'edit', 'cat', 'annotate']
     idx = None
     for idx,word in enumerate(remaining_args):
         if word in commands:
