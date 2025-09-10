@@ -23,6 +23,8 @@ Note : this step is optionnal ; if you prefer, you can pass the token as a comma
 
 ## Basic usage : list, create, search, mark as done
 
+![Recording of shell : basic examples](https://github.com/OzwaldFR/Taskwarrior-JP/raw/refs/heads/main/doc/video1_list_add_search_done.gif)
+
 ### Listing todo-notes
 
 If you execute `./tjp.py`, you should see a list of all the todo-notes that are currently not tagged as "done" within your Joplin App.
@@ -53,6 +55,8 @@ Knowing all this, this is how you mark the task with ID "b42" as "done" : `./tjp
  * `./tjp.py 123 done` will mark task of ID "123" as done.
 
 ## Common usage : modifying todo, using tags and metadata
+
+![Recording of shell : common examples](https://github.com/OzwaldFR/Taskwarrior-JP/raw/refs/heads/main/doc/video2_modify_tag_priority.gif)
 
 ### Modifying a todo
 
@@ -107,6 +111,8 @@ Here are all the currently "usable" metadata :
 You can also define any other metadata (ex: `./tjp.py ff16 modify mysupermeta:valueofdoom`) but they will not be treated specially (they won't alter the priority of tasks, etc.) and they won't even be displayed back to you so they are only usefull for filtering purposes.
 
 ### Annotations
+
+![Recording of shell : advanced examples](https://github.com/OzwaldFR/Taskwarrior-JP/raw/refs/heads/main/doc/video3_advanced.gif)
 
 Mostly like in the original Taskwarrior, you can annotate your tasks in Taskwarrior-JP.
 
